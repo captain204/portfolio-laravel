@@ -22,4 +22,4 @@ Route::get('/', function () {
 
 Route::resource('Contact', 'ContactController');
 */
-Route::post('contact','ContactController@contact')->name('contact');
+Route::post('contact','ContactController@store')->name('contact');

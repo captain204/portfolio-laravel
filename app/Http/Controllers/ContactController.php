@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contact;
+use App\Http\Requests\ContactStoreRequest;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class ContactController extends Controller
 {
     
-    public function contact(Request $request)
+    public function store(ContactStoreRequest $request)
     {
 
         $data = array(
@@ -16,9 +20,15 @@ class ContactController extends Controller
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'email' => $request->email,
-            'message'=> $request->message,
+            'subject' => $request->subject,
+            'message'=> $request->message
         );
 
-        $contact = Contact::create($data)
+        $contact = Contact::create($data);
+
+        Mail::to('nurudeenakindele@gmail.com')->send(new SendMail($data));
+        
+        return back()->with('success','Thanks for contacting us');
+        
     }
 }

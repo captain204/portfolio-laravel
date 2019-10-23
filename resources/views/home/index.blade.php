@@ -303,32 +303,44 @@
             <h2 class="section-title text-center mb-5">Contact Form</h2>
           </div>
         </div>
-      <form action="{{route('contact')}}" class="form">
+        @if($errors->any())
+		        <ul class="alert-danger">
+	      	    @foreach($errors->all() as $error)
+				        <li>{{$error}}</li>
+		          @endforeach
+		      </ul>
+        @endif
+        @if ($message = Session::get('success'))
+          <div class="alert alert-success">
+              {{$message}}
+          </div>
+        @endif
+      <form action="{{route('contact')}}" class="form" method="POST">
           {{csrf_field()}}
           <div class="row mb-4">
             <div class="form-group col-6">
-              <input type="text" class="form-control" placeholder="First name" required autocomplete="">
+              <input type="text" class="form-control" name="firstname" placeholder="First name" required>
             </div>
             <div class="form-group col-6">
-              <input type="text" class="form-control" placeholder="Last name" required>
+              <input type="text" class="form-control" name="lastname" placeholder="Last name" required>
             </div>
           </div>
 
           <div class="row mb-4">
             <div class="form-group col-12">
-              <input type="email" class="form-control" placeholder="Email address" required>
+              <input type="email" class="form-control" name="email" placeholder="Email address" required>
             </div>
           </div>
 
           <div class="row mb-4">
             <div class="form-group col-12">
-              <input type="text" class="form-control" placeholder="Subject of the message" required>
+              <input type="text" class="form-control" name="subject" placeholder="Subject of the message" required>
             </div>
           </div>
 
           <div class="row mb-4">
             <div class="form-group col-12">
-              <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Type your message here.." required></textarea>
+              <textarea  cols="30" rows="10" name="message" class="form-control" placeholder="Type your message here.."></textarea>
             </div>
           </div>
 
